@@ -1,0 +1,5 @@
+<textarea class="form-control" [(ngModel)]=message.text></textarea>
+<div class="col-12 mx-0 px-0 text-end">
+    <button class="btn text-primary" (click)="sendHit.emit(true)">Send</button>
+    <button class="btn text-warning me-0 pe-0" (click)="cancelHit.emit(true)">Cancel</button>
+</div>

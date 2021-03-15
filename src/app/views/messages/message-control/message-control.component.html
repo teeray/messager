@@ -1,0 +1,32 @@
+<div class="col-12">
+    <div class="row mt-2">
+        <div class="col-4 ms-0 ps-0" >
+                <div class="mt-1 text-center" *ngIf="data.pools.length === 0">
+                    <small>
+                        No messages
+                    </small>
+                </div>
+
+            <div *ngFor="let pool of orderedPools">
+                <button class="btn border text-primary  col-12 mb-2" 
+                (click)="selectedPool = pool;newPool = null">
+                    <div>
+                        Messages:{{pool.messages.length}}
+                    </div>
+                    <div>
+                        {{getMemberNames(pool)}}
+                    </div>
+                </button>
+            </div>
+        </div>
+        <div class="col-8 mx-0 px-0">
+            <div *ngIf="newPool">
+                <app-pool [pool]="newPool"></app-pool>
+            </div>
+            <div class="col-12" *ngIf="selectedPool && !newPool">
+                <app-pool [pool]="selectedPool" (newHit)="createPool();selectedPool = null">                    
+                </app-pool>
+            </div>
+        </div>
+    </div>
+</div>

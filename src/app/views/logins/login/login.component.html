@@ -1,0 +1,64 @@
+<div class="col-12">
+    <div class="row">
+        <div class="col-12 input-group ">
+            <span class="input-group-text px-1">
+                Email
+            </span>
+            <input class="form-control" type="text" [(ngModel)]="login.userName">
+        </div>
+        <div class="col-12 input-group  mt-3">
+            <span class="input-group-text {{auth.passwordReset && !login.password ? 'text-danger' : ''}} px-1">
+                {{auth.passwordReset ? 'New ' : ''}}Password
+            </span>
+            <input class="form-control" type="password" [(ngModel)]="login.password">
+        </div>
+        <div *ngIf="isNoName" class="col-12 input-group  mt-3">
+            <span class="input-group-text px-1">
+                Display Name
+            </span>
+            <input class="form-control" type="text" [(ngModel)]="name">
+        </div>
+        <div *ngIf="auth.passwordReset" class="col-12 mt-3 input-group ">
+            <span class="input-group-text px-1">
+                Code
+            </span>
+            <input class="form-control" type="text" [ngModel]="auth.passwordReset">
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-3  text-left">
+                    <button *ngIf="!auth.passwordReset" class="btn text-warning ms-0 ps-0 my-1 me-1" 
+                    (click)="reset()">
+                        Reset
+                    </button>
+                </div>
+                <div class="col-9  text-end">
+                    <button *ngIf="auth.passwordReset" class="btn text-primary my-1 " 
+                    (click)="postReset()">Confirm
+                    </button>
+                    <button *ngIf="auth.passwordReset" class="btn text-warning my-1 pe-0"
+                        (click)="auth.passwordReset = '';isResetError = false;">Cancel
+                    </button>
+                    <button *ngIf="!auth.passwordReset" class="btn text-primary  my-1 " 
+                    (click)="postLogin()">
+                        Login
+                    </button>
+                    <button *ngIf="!auth.passwordReset" class="btn text-primary my-1 pe-0" 
+                    (click)="postRegistration()">
+                        {{isNoName ? 'Confirm' : 'Register'}}
+                    </button>
+                    <button *ngIf="isNoName" class="btn text-danger my-1 pe-0" 
+                    (click)="isNoName = false;">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-12" *ngIf="isResetError">
+            <div class="text-danger">Enter your Email to reset password</div>
+        </div>
+        <div class="col-12" *ngIf="isRegError">
+            <div class="text-danger">Include both Email and Password</div>
+        </div>
+    </div>
+</div>

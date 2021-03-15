@@ -1,0 +1,79 @@
+<div *ngIf="data.user" class="col-12 mb-4 pb-4">
+    <div class="row sticky white">
+        <div class="col ms-0 ps-0 mb-0 pb-0 h5 ">
+            Update your profile
+        </div>
+        <div class="col pe-0 me-0 text-end">
+            <button [disabled]="!needUpdate" class="btn text-primary me-0 py-1" 
+            (click)="data.putUser()">{{needUpdate ?
+                'Save Your Changes' : 'Edit To Save'}}</button>
+        </div>
+    </div>
+    <div class='row mt-1'>
+        <div class="col-12 col-md-6 px-0 mx-0 mt-2">
+            <div class="input-group">
+                <span class="input-group-text">Name</span>
+                <input type="text" class="form-control" [(ngModel)]="data.user.name">
+            </div>
+            <div class="input-group mt-2">
+                <span class="input-group-text">BirthDate</span>
+                <input type="date" class="form-control" 
+                [ngModel]="data.user.birthDate | date:'yyyy-MM-dd'"
+                    (ngModelChange)="setDate($event)">
+            </div>
+        </div>
+        <div class="col-12 col-md-6 px-0 mx-0 ps-md-1 mt-2">
+            <div class="input-group">
+                <span class="input-group-text">Profile</span>
+                <textarea class="form-control" rows=3 [(ngModel)]="data.user.profile"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col-12 mx-0 px-0">
+            <input id="fileinput" class="form-control" type='file' 
+            accept="image/png,image/jpg,image/jpeg"
+                (change)="addFile($event)">
+        </div>
+        <div *ngIf="data.user.avatar && data.user.avatar.file" 
+        class="col-12 mx-0 px-0 text-center mt-1">
+            <img [src]="data.user.avatar.file" style="max-height: 250px;">
+        </div>
+    </div>
+    <div class="card row text-center">
+        <div class="card-header" style="background-color: #e9ecef;">
+            Add Your Contact Info
+        </div>
+        <div class="card-body">
+            <button *ngIf="!newContact" class="btn text-primary" 
+            (click)="addContacts()">
+                Create
+            </button>
+            <button *ngIf="newContact" class="btn text-warning" 
+            (click)="newContact = null">
+                Cancel
+            </button>
+            <div class="row mt-2" *ngIf="newContact">
+                <div class="col-12 mx-0 px-0">
+                    <div class="col-12 mx-0 px-0 text-center">Enter A New Contact</div>
+                    <app-contact [isNew]="true" [contact]="newContact" (saveHit)="addContacts()"></app-contact>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-muted" style="background-color: #e9ecef;">
+            {{contacts.length}} current contacts
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3 h5 mb-0 pb-0" *ngIf="contacts.length > 0">
+        Your Existing Contacts
+    </div>
+    <div class="row" *ngIf="contacts.length > 0">
+        <div class="col-12">
+            <div class="row my-4" *ngFor="let contact of contacts">
+                <div class="col-12 mx-0 px-0">
+                    <app-contact [contact]="contact"></app-contact>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

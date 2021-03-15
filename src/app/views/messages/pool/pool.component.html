@@ -1,0 +1,67 @@
+<div class="col-12">
+    <div class="row align-items-center">
+        <div class=" {{pool.id === 0 ? 'col-12' : 'col-9 me-0 pe-0'}}">
+            <div class="dropdown">
+                <button class="btn text-primary border dropdown-toggle col-12" type="button" 
+                id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Add User
+                </button>
+                <div class="dropdown-menu py-0 col-12" style="overflow-y: auto;max-height:200px">
+                    <button *ngFor="let user of getOtherUsers" class="btn col-12 text-start" 
+                    (click)="addUser(user)">
+                        <div class="col-12">
+                            <div class="row align-items-center">
+                                <div class="col-2 col-md-1">
+                                    <img *ngIf="user.avatar" [src]="user.avatar.file" 
+                                    style='max-height:35px;'>
+                                </div>
+                                <div class="col-10 col-md-11 h6 mb-0 pb-0">
+                                    <div class="font-size:14px;">
+                                        {{user?.name}}
+                                    </div>
+                                    <div class="overflow-hidden" style="font-size: 12px;max-height:50px"
+                                        *ngIf="user && user.profile">
+                                        {{user.profile}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 ms-0 ps-0 text-center" *ngIf="pool.id !== 0">
+            <button class="btn text-primary" (click)="newHit.emit(true)">New</button>
+        </div>
+    </div>
+</div>
+<div class="my-1 row" *ngFor="let user of members">
+    <div class="col">
+        <div class="input-group input-group-sm">
+            <span class="input-group-text" *ngIf="getUserImage(user.authID)">
+                <img [src]="getUserImage(user.authID)" style='max-height:30px;'>
+            </span>
+            <input class="form-control" disabled [ngModel]="getUserName(user.authID)">
+            <button *ngIf="pool.id === 0" [disabled]="user.authID === auth.auth.id" class="btn btn-danger"
+                (click)="user.isDeleted = true">X</button>
+        </div>
+    </div>
+</div>
+<div class="mt-2 row align-items-center" *ngIf="members.length > 1">
+    <div class="col-12  text-end">
+        <button class="btn btn-sm text-primary py-0" (click)="addMessage()">
+            Add a message to the group
+        </button>
+    </div>
+</div>
+<div *ngIf="newMessage" class="mt-2">
+    <app-message [message]="newMessage" (sendHit)="sendMessage()" (cancelHit)="newMessage = null">
+    </app-message>
+</div>
+<div *ngFor="let message of orderedMessages" class="my-1 col-12">
+    <div class="col-12 text-break">
+        {{message.text}}
+    </div>
+    <div style="font-size: 12px;" class="text-primary">{{getUserName(message.fromAuth)}}</div>
+</div>

@@ -1,0 +1,24 @@
+<nav *ngIf="!nav.isHome" class="navbar navbar-expand-sm navbar-dark bg-dark row">
+    <div class="container-fluid">
+      <a class="navbar-brand mb-1 {{nav.isHome ? 'fw-bold' : ''}}" 
+      (click)="auth.isLoggedOut = true;nav.homePress()">Super Awesome Site</a>
+      <button #toggler class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+      data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" 
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
+        <div class="navbar-nav me-auto">
+              <a class="nav-link px-2 text-white {{nav.isMessages ? 'fw-bold' : ''}}" 
+              aria-current="page" (click)="nav.messagePress();toggler.click()">
+                  Message
+              </a>
+              <a class="nav-link px-2 text-white {{nav.isUsers ? 'fw-bold' : ''}}" 
+              (click)="nav.userPress();toggler.click()">
+                  Profile
+              </a>
+          </div>
+      </div>
+    </div>
+  </nav>
